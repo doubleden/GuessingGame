@@ -18,10 +18,14 @@ struct ContentView: View {
             Text("Передвиньте слайдер, как можно ближе к: \(targetValue)")
                 .font(.callout)
             
-            SliderRepresentation(
-                currentValue: $currentValue,
-                score: computeScore()
-            )
+            HStack {
+                Text("0")
+                SliderRepresentation(
+                    currentValue: $currentValue,
+                    score: computeScore()
+                )
+                Text("100")
+            }
             
             Button("Проверь меня!", action: { isPresented.toggle() })
                 .alert("Ваш счет", isPresented: $isPresented, actions: {}) {
@@ -29,7 +33,8 @@ struct ContentView: View {
                 }
             
             Button("Начать заново") {
-               
+                targetValue = Int.random(in: 0...100)
+                currentValue = Double.random(in: 0...100)
             }
         }
         .padding()

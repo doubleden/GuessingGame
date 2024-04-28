@@ -16,8 +16,8 @@ struct SliderRepresentation: UIViewRepresentable {
         let slider = UISlider()
         slider.minimumValue = 0
         slider.maximumValue = 100
-        slider.value = Float(currentValue)
-        slider.thumbTintColor = makeThumbColor(score)
+        slider.value = currentValue.toFloat()
+        slider.thumbTintColor = makeThumbColor(alpha: score)
         slider.addTarget(
             context.coordinator,
             action: #selector(Coordinator.sliderWasMoved),
@@ -27,14 +27,15 @@ struct SliderRepresentation: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UISlider, context: Context) {
-        uiView.thumbTintColor = makeThumbColor(score)
+        uiView.value = currentValue.toFloat()
+        uiView.thumbTintColor = makeThumbColor(alpha: score)
     }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(currentValue: $currentValue)
     }
     
-    private func makeThumbColor(_ score: Int) -> UIColor {
+    private func makeThumbColor(alpha score: Int) -> UIColor {
         UIColor.red.withAlphaComponent(CGFloat(score) / 100.0)
     }
 }
@@ -50,6 +51,12 @@ extension SliderRepresentation {
         @objc func sliderWasMoved(_ slider: UISlider) {
             currentValue = Double(slider.value)
         }
+    }
+}
+
+private extension Double {
+    func toFloat() -> Float {
+        Float(self)
     }
 }
 
