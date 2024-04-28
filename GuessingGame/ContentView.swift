@@ -28,7 +28,12 @@ struct ContentView: View {
             }
             
             Button("Проверь меня!", action: { isPresented.toggle() })
-                .alert("Ваш счет", isPresented: $isPresented, actions: {}) {
+                .alert(computeScore() == 100
+                       ? "Глаз алмаз!"
+                       : "Ваш Счет",
+                       isPresented: $isPresented,
+                       actions: {
+                }) {
                     Text(computeScore().formatted())
                 }
             
