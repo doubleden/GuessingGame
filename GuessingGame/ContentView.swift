@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let targetValue = Int.random(in: 0...100)
+    @State var targetValue = Int.random(in: 0...100)
     @State var currentValue = Double.random(in: 0...100)
+    
     @State var isPresented = false
     
     var body: some View {
@@ -23,9 +24,13 @@ struct ContentView: View {
             )
             
             Button("Проверь меня!", action: { isPresented.toggle() })
-                .alert("Ващ счет: \(computeScore())", isPresented: $isPresented, actions: {})
+                .alert("Ваш счет", isPresented: $isPresented, actions: {}) {
+                    Text(computeScore().formatted())
+                }
             
-            Button("Начать заново", action: {})
+            Button("Начать заново") {
+               
+            }
         }
         .padding()
     }
@@ -34,6 +39,7 @@ struct ContentView: View {
         let difference = abs(targetValue - lround(currentValue))
         return 100 - difference
     }
+    
 }
 
 #Preview {
