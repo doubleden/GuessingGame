@@ -22,7 +22,7 @@ struct ContentView: View {
                 Text("0")
                 SliderRepresentation(
                     currentValue: $currentValue,
-                    score: computeScore()
+                    alpha: Double(computeScore()) / 100
                 )
                 Text("100")
             }
@@ -46,8 +46,7 @@ struct ContentView: View {
     }
     
     private func computeScore() -> Int {
-        let difference = abs(targetValue - lround(currentValue))
-        return 100 - difference
+        100 - abs(targetValue - lround(currentValue))
     }
     
 }

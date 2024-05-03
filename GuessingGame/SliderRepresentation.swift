@@ -10,14 +10,13 @@ import SwiftUI
 struct SliderRepresentation: UIViewRepresentable {
     
     @Binding var currentValue: Double
-    var score: Int
+    let alpha: Double
     
     func makeUIView(context: Context) -> UISlider {
         let slider = UISlider()
         slider.minimumValue = 0
         slider.maximumValue = 100
-        slider.value = currentValue.toFloat()
-        slider.thumbTintColor = makeThumbColor(alpha: score)
+        
         slider.addTarget(
             context.coordinator,
             action: #selector(Coordinator.sliderWasMoved),
@@ -28,15 +27,11 @@ struct SliderRepresentation: UIViewRepresentable {
     
     func updateUIView(_ uiView: UISlider, context: Context) {
         uiView.value = currentValue.toFloat()
-        uiView.thumbTintColor = makeThumbColor(alpha: score)
+        uiView.thumbTintColor = .red.withAlphaComponent(alpha)
     }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(currentValue: $currentValue)
-    }
-    
-    private func makeThumbColor(alpha score: Int) -> UIColor {
-        UIColor.red.withAlphaComponent(CGFloat(score) / 100.0)
     }
 }
 
@@ -61,5 +56,5 @@ private extension Double {
 }
 
 #Preview {
-    SliderRepresentation(currentValue: .constant(60), score: 5)
+    SliderRepresentation(currentValue: .constant(60), alpha: 5)
 }
